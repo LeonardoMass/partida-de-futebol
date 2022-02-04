@@ -5,7 +5,7 @@
  */
 package com.partida.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
+
 
 
 /**
@@ -37,7 +39,7 @@ public class Evento {
     @OneToMany(mappedBy = "evento")
     private List<Time> time = new ArrayList<Time>();
    
-
+    
     public Evento(Integer id, String local, String dataS) {
         this.id = id;
         this.local = local;

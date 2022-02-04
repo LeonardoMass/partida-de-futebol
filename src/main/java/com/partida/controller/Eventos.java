@@ -39,7 +39,7 @@ public class Eventos {
     public void cadastrarEvento(@RequestBody Evento evento) throws ParseException {
         
         
-        EventoDAO.cadastrarD(evento);
+         EventoDAO.cadastrarD(evento);
     }
     
 // listar tudo

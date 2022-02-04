@@ -32,40 +32,45 @@ public class EventoDAO {
     @Autowired
     private TimeRepository repositoryTime;
 
-    public Evento cadastrar(Evento evento) throws ParseException {
-
-        Date data = sdf1.parse(evento.getDataS());
-        evento.setData(data);
-        evento = repositoryEvento.saveAndFlush(evento);
-
-        return evento;
-    }
 
     public void cadastrarD(Evento evento) throws ParseException {
-        Date data = sdf1.parse(evento.getDataS());
-        evento.setData(data);
 
-        if (evento.getLocal() == null || evento.getData() == null) {
+        if (evento.getLocal() == null || evento.getDataS() == null) {
             System.out.println("dados nulos em evento");
-        } else if (evento.getTime().get(0).getNome() == null || evento.getTime().get(1).getNome() == null || evento.getTime().get(0).getCorCamisa() == null
-                || evento.getTime().get(1).getCorCamisa() == null) {
-            System.out.println("Nome ou cor da camisa dos times nula");
-        } else if (evento.getTime().get(0).getNome().equalsIgnoreCase(evento.getTime().get(1).getNome())) {
-            System.out.println("NOMEs iguais");
-
-        } else if (evento.getTime().get(0).getCorCamisa().equalsIgnoreCase(evento.getTime().get(1).getCorCamisa())) {
-            System.out.println("Cor da camisa iguais");
         } else {
+            if (evento.getTime().get(0).getNome() == null || evento.getTime().get(1).getNome() == null || evento.getTime().get(0).getCorCamisa() == null
+                    || evento.getTime().get(1).getCorCamisa() == null) {
+                System.out.println("Nome ou cor da camisa dos times nula");
+            } else {
+                if (evento.getTime().get(0).getNome().equalsIgnoreCase(evento.getTime().get(1).getNome())) {
+                    System.out.println("Times iguais");
 
-            evento = repositoryEvento.saveAndFlush(evento);
+                } else {
+                    if (evento.getTime().get(0).getCorCamisa().equalsIgnoreCase(evento.getTime().get(1).getCorCamisa())) {
+                        System.out.println("Cor das camisas iguais");
+                    } else {
+                        
+                        Date data = sdf1.parse(evento.getDataS());
+                        evento.setData(data);
 
-            for (Time t : evento.getTime()) {
-                t.setEvento(evento);
-                repositoryTime.saveAndFlush(t);
-                System.out.println(t.toString());
+                        evento = repositoryEvento.saveAndFlush(evento);
+
+                        int i = 0;
+                        for (Time t : evento.getTime()) {
+                            t.setEvento(evento);
+                            repositoryTime.saveAndFlush(t);
+                            System.out.println(t.toString());
+                            i++;
+                            if (i >= 2) {
+                                break;
+                            }
+                        }
+
+                    }
+                }
             }
-
         }
+       
     }
 
     public void buscarID(int id) {
@@ -104,7 +109,7 @@ public class EventoDAO {
 
         Evento evento = repositoryEvento.findById(id).get();
 
-        if (t1 < 0 && t2 < 0) {
+        if (t1 < 0 && t2 < 0 ) {
             System.out.println("Saldo de gol menor que zero");
         } else {
 
@@ -120,15 +125,14 @@ public class EventoDAO {
         }
 
     }
-    
-    public void deletarEvento(int id){
-        System.out.println("Deletado evento "+id);
+
+    public void deletarEvento(int id) {
+        System.out.println("Deletado evento " + id);
         Evento evento = repositoryEvento.findById(id).get();
         repositoryTime.deleteAllInBatch(evento.getTime());
-        
+
         repositoryEvento.deleteById(id);
-        
-        
+
     }
 
 }
