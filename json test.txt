@@ -1,0 +1,33 @@
+{
+    "local": "Arena",
+    "dataS": "2022-02-25",
+   
+    "time": [
+        {
+        "nome": "gremio",
+        "corCamisa": "azul"
+   	 },
+    	{
+        "nome": "inter",
+        "corCamisa": "vermelho"
+
+    	}
+     ]
+}
+
+{
+    "local": "Beira",
+    "dataS": "2022-02-10",
+   
+    "time": [
+        {
+        "nome": "juventude",
+        "corCamisa": "verde"
+   	 },
+    	{
+        "nome": "curintia",
+        "corCamisa": "branco"
+
+    	}
+     ]
+}
